@@ -15,17 +15,10 @@ function submitTodo() {
 };
 
 function toggleTodo() { 
-  
-  this.parentElement.style.textDecoration = this.checked ? "line-through" : "";
 
-  if (this.parentElement.style.textDecoration == "line-through" && this.parentElement.childNodes[2] == undefined) {
+  todos[this.parentElement.id].done = this.checked ? true : false;
 
-    const button = document.createElement("button");
-    button.innerHTML = "remove";
-    this.parentElement.appendChild(button);
-
-    button.addEventListener("click", removeFromTodos);
-  };
+  render();
 };
 
 function removeFromTodos() {
@@ -42,7 +35,7 @@ function render() {
   
     const li = document.createElement("li");
     todoList.appendChild(li);
-    todoList.id = index
+    li.id = index;
 
     const input = document.createElement("input");
     input.type = "checkbox";
@@ -52,10 +45,18 @@ function render() {
     label.innerText = todo.todoName;
     li.appendChild(label);
 
+    if (todo.done == true) {
+      label.style.textDecoration = "line-through";
+      input.checked = true;
+      const button = document.createElement("button");
+      button.innerHTML = "remove";
+      li.appendChild(button);
+  
+      button.addEventListener("click", removeFromTodos);
+    } 
+    
     input.addEventListener("click", toggleTodo);
   });
 };
 
-//keep todo slashes on other element when user clicks on remove
-//get rid of remove button when user removes strikethrough
-//store state of todo on the todo object, update objects state when user clicks checkbox
+
