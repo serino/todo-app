@@ -22,24 +22,23 @@ Acceptance Criteria
 - When the checkbox is checked, strike through the TODO
 - When the checkbox is unchecked, unstrike the TODO
 
-//LEFT OFF HERE: 04/01 
 Task Four - Remove TODO's
 Description
 - Users should be able to remove completed todos
 Acceptance Criteria
 - Completed TODO's should enable a button to delete the individual TODO
-//COMPLETED TASK FOUR ON 04/02
 
-//WE SEEMED TO HAVE COMPLETED THIS IN CLASS ON 04/01
-Task Five - Create TODO Class
-Description
-- The TODO should be created from a class
-Acceptance Criteria
-- TODOS should be...What was this sentence supposed to say?
-
-Task Six - Persist TODO's between page refreshes
+Task Five - Persist TODO's between page refreshes
 Description
 - Users don't want to lose their todo's when the page refreshes.
+Acceptance Criteria
+- Using localstorage persist todos
+- Todos should be removed from storage when a todo is removed
+- Todos should be added to storage when a todo is added
+
+Task Six - Update TODO's
+Description
+- if user wants to change todo after inputting.
 Acceptance Criteria
 - Using localstorage perist todos
 - Todos should be removed from storage when a todo is removed

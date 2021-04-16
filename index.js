@@ -2,30 +2,84 @@ const addTodo = document.querySelector("#addTodo");
 
 const todoList = document.querySelector("#todoList");
 
-const todos = [];
+const localStorageTodos = localStorage.getItem("todos");
+
+let todos;
+
+let replace;
+
+if (localStorageTodos != undefined) {
+  todos = JSON.parse(localStorageTodos);
+  render();
+}
+else {
+    todos = [];
+};
 
 function submitTodo() {
+  if (!addTodo.value) return;
+    
+  const foundTodo = todos.some((todo) => todo.todoName == addTodo.value);
+  
+  if (foundTodo) {
+    alert("todo already exists");
+    return;
+  }
 
-  if (addTodo.value != "") {
-    let todoObject = new Todo(addTodo.value) 
-    todos.push(todoObject);
-    addTodo.value = "";
-    render();
+  if (!replace) {
+    todos.push(new Todo(addTodo.value));
+  } 
+  else {
+    replace.todoName = addTodo.value;
+    replace = undefined;
   };
+  
+  addTodo.value = "";
+  render();
+};
+
+
+// function submitTodo() {
+ 
+//   if (addTodo.value != "") {
+//     // TODO: user should not be able to enter same todo more than once. Iterate through todos and see if it contains an item equal to addTodo.value. 
+//     //If it doesn't, move onto the code below, else show message saying "to-do already exists"
+
+//     if (replace == undefined) {
+//       let todoObject = new Todo(addTodo.value) 
+//       todos.push(todoObject);
+//     }
+//     else {
+//       todos.forEach((todo) => {
+//         if (todo.todoName == replace) {
+//           todo.todoName = addTodo.value;
+//         }
+//         else {
+//           //TODO: alert or message saying replace does not exist. 
+//         };
+//       });
+//       replace = undefined;
+//     };
+//   };
+
+//   addTodo.value = "";
+//   render();
+// };
+
+function replaceTodo() {
+  if (addTodo.value != "") {
+    replace = todos.find((todo) => todo.todoName == addTodo.value);
+  };
+
+  addTodo.value = "";
 };
 
 function toggleTodo() { 
-  
-  this.parentElement.style.textDecoration = this.checked ? "line-through" : "";
 
-  if (this.parentElement.style.textDecoration == "line-through" && this.parentElement.childNodes[2] == undefined) {
+  todos[this.parentElement.id].done = this.checked ? true : false;
 
-    const button = document.createElement("button");
-    button.innerHTML = "remove";
-    this.parentElement.appendChild(button);
+  render();
 
-    button.addEventListener("click", removeFromTodos);
-  };
 };
 
 function removeFromTodos() {
@@ -38,11 +92,12 @@ function removeFromTodos() {
 function render() {
 
   todoList.innerHTML = "";
+
   todos.forEach((todo, index) => {
   
     const li = document.createElement("li");
     todoList.appendChild(li);
-    todoList.id = index
+    li.id = index;
 
     const input = document.createElement("input");
     input.type = "checkbox";
@@ -52,10 +107,24 @@ function render() {
     label.innerText = todo.todoName;
     li.appendChild(label);
 
+    if (todo.done == true) {
+      label.style.textDecoration = "line-through";
+      input.checked = true;
+      const button = document.createElement("button");
+      button.innerHTML = "remove";
+      li.appendChild(button);
+  
+      button.addEventListener("click", removeFromTodos);
+    };
+    
     input.addEventListener("click", toggleTodo);
   });
+
+  localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-//keep todo slashes on other element when user clicks on remove
-//get rid of remove button when user removes strikethrough
-//store state of todo on the todo object, update objects state when user clicks checkbox
+
+
+
+
+
