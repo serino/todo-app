@@ -32,6 +32,14 @@ Task Five - Persist TODO's between page refreshes
 Description
 - Users don't want to lose their todo's when the page refreshes.
 Acceptance Criteria
+- Using localstorage persist todos
+- Todos should be removed from storage when a todo is removed
+- Todos should be added to storage when a todo is added
+
+Task Six - Update TODO's
+Description
+- if user wants to change todo after inputting.
+Acceptance Criteria
 - Using localstorage perist todos
 - Todos should be removed from storage when a todo is removed
 - Todos should be added to storage when a todo is added
